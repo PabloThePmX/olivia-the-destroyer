@@ -16,7 +16,7 @@ fundoDead = pygame.image.load("recursos/fundoDead.png")
 fastOlivia = pygame.image.load("recursos/ataque.png") # olivia
 oliviaDeRoupa = pygame.image.load("recursos/oliviadeRoupa.png")
 kiara = pygame.image.load("recursos/kiara_nanando.png")
-helloKitty = pygame.image.load("recursos/helloKitty.png")
+helloKitty = pygame.image.load("recursos/helloKitty.png")   
 tamanho = (800,600)
 tela = pygame.display.set_mode( tamanho ) 
 pygame.display.set_caption("Olivia, the Destroyer")
