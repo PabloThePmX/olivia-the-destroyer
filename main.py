@@ -2,7 +2,7 @@ import pygame
 import random
 import os
 from tkinter import simpledialog
-from balao import draw_speech_bublle as balaoSonho
+from balao import draw_speech_bubble as balaoSonho
 
 pygame.init()
 
@@ -13,12 +13,12 @@ fundo = pygame.image.load("recursos/fundo.png")
 fundoStart = pygame.image.load("recursos/fundoStart.png")
 fundoDead = pygame.image.load("recursos/fundoDead.png")
 
-missel = pygame.image.load("recursos/missile.png") # olivia
+fastOlivia = pygame.image.load("recursos/ataque.png") # olivia
 # oliviaDeRoupa
 # kiara
 tamanho = (800,600)
 tela = pygame.display.set_mode( tamanho ) 
-pygame.display.set_caption("Iron Man do Marcão")
+pygame.display.set_caption("Olivia, the Destroyer")
 pygame.display.set_icon(icone)
 missileSound = pygame.mixer.Sound("recursos/missile.wav")
 explosaoSound = pygame.mixer.Sound("recursos/explosao.wav")
@@ -38,19 +38,18 @@ def jogar(nome):
     posicaoYPersona = 500
     movimentoXPersona  = 0
     movimentoYPersona  = 0
-    posicaoXMissel = 400
-    posicaoYMissel = -240
-    velocidadeMissel = 1
+    posicaoXfastOlivia = 400
+    posicaoYfastOlivia = -240
+    velocidadefastOlivia = 1
     pontos = 0
     larguraPersona = 250
     alturaPersona = 127
-    larguaMissel  = 50
-    alturaMissel  = 250
+    larguafastOlivia  = 50
+    alturafastOlivia  = 250
     dificuldade  = 20
     posicaoYKiara = 100
     posicaoXKiara = 200
-
-    # balaoSonho()
+    sizeBalao = 35
 
     while True:
         for evento in pygame.event.get():
@@ -72,7 +71,7 @@ def jogar(nome):
             #     movimentoYPersona = 0
             # elif evento.type == pygame.KEYUP and evento.key == pygame.K_DOWN:
             #     movimentoYPersona = 0
-                
+
         posicaoXPersona = posicaoXPersona + movimentoXPersona            
         posicaoYPersona = posicaoYPersona + movimentoYPersona            
         
@@ -91,28 +90,32 @@ def jogar(nome):
         tela.blit(fundo, (0,0) )
         #pygame.draw.circle(tela, preto, (posicaoXPersona,posicaoYPersona), 40, 0 )
         tela.blit( iron, (posicaoXPersona, posicaoYPersona) )
+
+        # coloca o balao de soninho da kiara
+        balaoSonho(tela, "ZzZzZZ", preto, branco, (750, 500), sizeBalao)
         
-        posicaoYMissel = posicaoYMissel + velocidadeMissel
-        if posicaoYMissel > 600:
-            posicaoYMissel = -240
+        posicaoYfastOlivia = posicaoYfastOlivia + velocidadefastOlivia
+        if posicaoYfastOlivia > 600:
+            posicaoYfastOlivia = -240
             pontos = pontos + 1
-            velocidadeMissel = velocidadeMissel + 1
-            posicaoXMissel = random.randint(0,800)
+            velocidadefastOlivia = velocidadefastOlivia + 1
+            posicaoXfastOlivia = random.randint(0,800)
             pygame.mixer.Sound.play(missileSound)
+            sizeBalao = 35 if sizeBalao == 20 else 20
             
             
-        tela.blit( missel, (posicaoXMissel, posicaoYMissel) )
+        tela.blit( fastOlivia, (posicaoXfastOlivia, posicaoYfastOlivia) )
         
         texto = fonte.render(nome+"- Pontos: "+str(pontos), True, branco)
         tela.blit(texto, (10,10))
         
         pixelsPersonaX = list(range(posicaoXPersona, posicaoXPersona+larguraPersona))
         pixelsPersonaY = list(range(posicaoYPersona, posicaoYPersona+alturaPersona))
-        pixelsMisselX = list(range(posicaoXMissel, posicaoXMissel + larguaMissel))
-        pixelsMisselY = list(range(posicaoYMissel, posicaoYMissel + alturaMissel))
+        pixelsfastOliviaX = list(range(posicaoXfastOlivia, posicaoXfastOlivia + larguafastOlivia))
+        pixelsfastOliviaY = list(range(posicaoYfastOlivia, posicaoYfastOlivia + alturafastOlivia))
         
-        if  len( list( set(pixelsMisselY).intersection(set(pixelsPersonaY))) ) > dificuldade:
-            if len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
+        if  len( list( set(pixelsfastOliviaY).intersection(set(pixelsPersonaY))) ) > dificuldade:
+            if len( list( set(pixelsfastOliviaX).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
                 dead(nome, pontos)
         
         pygame.display.update()
@@ -198,7 +201,7 @@ def ranking():
 
 
 def start():
-    nome = simpledialog.askstring("Iron Man","Nome Completo:")
+    nome = simpledialog.askstring("Olivia, the Destroyer","Nome Completo:")
     
     
     
