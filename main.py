@@ -9,18 +9,19 @@ pygame.init()
 relogio = pygame.time.Clock()
 icone  = pygame.image.load("recursos/icone.ico")
 iron = pygame.image.load("recursos/iron.png") # monitor
-fundo = pygame.image.load("recursos/fundo.png")
+fundo = pygame.image.load("recursos/fundo.jpg")
 fundoStart = pygame.image.load("recursos/fundoStart.png")
 fundoDead = pygame.image.load("recursos/fundoDead.png")
 
 fastOlivia = pygame.image.load("recursos/ataque.png") # olivia
-# oliviaDeRoupa
-# kiara
+oliviaDeRoupa = pygame.image.load("recursos/oliviadeRoupa.png")
+kiara = pygame.image.load("recursos/kiara_nanando.png")
+helloKitty = pygame.image.load("recursos/helloKitty.png")
 tamanho = (800,600)
 tela = pygame.display.set_mode( tamanho ) 
 pygame.display.set_caption("Olivia, the Destroyer")
 pygame.display.set_icon(icone)
-missileSound = pygame.mixer.Sound("recursos/missile.wav")
+ataqueNormal = pygame.mixer.Sound("recursos/ataqueNormal.mp3")
 explosaoSound = pygame.mixer.Sound("recursos/explosao.wav")
 fonte = pygame.font.SysFont("futura",28)
 fonteStart = pygame.font.SysFont("futura",130)
@@ -32,7 +33,7 @@ preto = (0, 0 ,0 )
 
 
 def jogar(nome):
-    pygame.mixer.Sound.play(missileSound)
+    pygame.mixer.Sound.play(ataqueNormal)
     pygame.mixer.music.play(-1)
     posicaoXPersona = 400
     posicaoYPersona = 500
@@ -100,7 +101,7 @@ def jogar(nome):
             pontos = pontos + 1
             velocidadefastOlivia = velocidadefastOlivia + 1
             posicaoXfastOlivia = random.randint(0,800)
-            pygame.mixer.Sound.play(missileSound)
+            pygame.mixer.Sound.play(ataqueNormal)
             sizeBalao = 35 if sizeBalao == 20 else 20
             
             
