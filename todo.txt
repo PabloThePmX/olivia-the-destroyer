@@ -1,6 +1,6 @@
 problema: monitor tem q fugir da olivia
 
-dead screen == itens quebrados ao som de hello darkness my old friend
+dead screen == itens quebrados ao som de hamster triste
 
 nome == olivia, the destroyer
 
@@ -12,13 +12,11 @@ cenario = quarto
 
 musica = https://open.spotify.com/track/408y4MMGyp2cpRt8Nn5c6L?si=662cdb174b374ccb
 
-vidas = 3 == monitor completo, 2 == monitor quebrando, 1 == monitor quase fudido, 0 == monitor do pablo
-
 npc do cenario = kiara
 
 "sol" = balao da kiara roncando 
 
-inimigo 2 = "olivia MUITO braba" 
+inimigo 2 = "olivia de roupa" 
 
 som do inimigo 2 = hiss
 

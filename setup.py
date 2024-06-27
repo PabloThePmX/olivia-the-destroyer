@@ -3,7 +3,7 @@ import cx_Freeze
 executaveis = [ 
                cx_Freeze.Executable(script="main.py", icon="recursos/icone.ico") ]
 cx_Freeze.setup(
-    name = "Olivia the Destroyer",
+    name = "Olivia, the Destroyer",
     options={
         "build_exe":{
             "packages":["pygame"],
