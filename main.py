@@ -8,7 +8,7 @@ pygame.init()
 
 relogio = pygame.time.Clock()
 icone  = pygame.image.load("recursos/icone.ico")
-iron = pygame.image.load("recursos/iron.png") # monitor
+iron = pygame.image.load("recursos/monitor.png") # monitor
 fundo = pygame.image.load("recursos/fundo.jpg")
 fundoStart = pygame.image.load("recursos/fundoStart.png")
 fundoDead = pygame.image.load("recursos/fundoDead.png")
@@ -16,20 +16,21 @@ fundoDead = pygame.image.load("recursos/fundoDead.png")
 fastOlivia = pygame.image.load("recursos/ataque.png") # olivia
 oliviaDeRoupa = pygame.image.load("recursos/oliviadeRoupa.png")
 kiara = pygame.image.load("recursos/kiara_nanando.png")
-helloKitty = pygame.image.load("recursos/helloKitty.png")   
+helloKitty = pygame.image.load("recursos/helloKitty.png")
 tamanho = (800,600)
 tela = pygame.display.set_mode( tamanho ) 
 pygame.display.set_caption("Olivia, the Destroyer")
 pygame.display.set_icon(icone)
 ataqueNormal = pygame.mixer.Sound("recursos/ataqueNormal.mp3")
-explosaoSound = pygame.mixer.Sound("recursos/explosao.wav")
+# explosaoSound = pygame.mixer.Sound("recursos/explosao.wav")
 fonte = pygame.font.SysFont("futura",28)
-fonteStart = pygame.font.SysFont("futura",130)
+fonteStart = pygame.font.SysFont("futura",110)
 fonteMorte = pygame.font.SysFont("futura",150)
 pygame.mixer.music.load("recursos/soundtrack.mp3")
 
 branco = (255,255,255)
 preto = (0, 0 ,0 )
+vermelho = (255,0,0)
 
 
 def jogar(nome):
@@ -41,15 +42,17 @@ def jogar(nome):
     movimentoYPersona  = 0
     posicaoXfastOlivia = 400
     posicaoYfastOlivia = -240
+    posicaoXoliviaDeRoupinha = 200
+    posicaoYoliviaDeRoupinha = -240
     velocidadefastOlivia = 1
     pontos = 0
-    larguraPersona = 250
-    alturaPersona = 127
-    larguafastOlivia  = 50
-    alturafastOlivia  = 250
+    larguraPersona = 82
+    alturaPersona = 100
+    larguafastOlivia  = 150
+    alturafastOlivia  = 266
+    larguraoliviaDeRoupinha = 160
+    alturaoliviaDeRoupinha = 284
     dificuldade  = 20
-    posicaoYKiara = 100
-    posicaoXKiara = 200
     sizeBalao = 35
 
     while True:
@@ -64,59 +67,53 @@ def jogar(nome):
                 movimentoXPersona = 0
             elif evento.type == pygame.KEYUP and evento.key == pygame.K_LEFT:
                 movimentoXPersona = 0
-            # elif evento.type == pygame.KEYDOWN and evento.key == pygame.K_UP:
-            #     movimentoYPersona = -10
-            # elif evento.type == pygame.KEYDOWN and evento.key == pygame.K_DOWN:
-            #     movimentoYPersona = 10
-            # elif evento.type == pygame.KEYUP and evento.key == pygame.K_UP:
-            #     movimentoYPersona = 0
-            # elif evento.type == pygame.KEYUP and evento.key == pygame.K_DOWN:
-            #     movimentoYPersona = 0
 
         posicaoXPersona = posicaoXPersona + movimentoXPersona            
         posicaoYPersona = posicaoYPersona + movimentoYPersona            
         
-        if posicaoXPersona < 0 :
-            posicaoXPersona = 10
-        elif posicaoXPersona >550:
-            posicaoXPersona = 540
-            
-        if posicaoYPersona < 0 :
-            posicaoYPersona = 10
-        elif posicaoYPersona > 473:
-            posicaoYPersona = 463
-        
+        if posicaoXPersona < 50 :
+            posicaoXPersona = 60
+        elif posicaoXPersona > 650:
+            posicaoXPersona = 640
             
         tela.fill(branco)
         tela.blit(fundo, (0,0) )
-        #pygame.draw.circle(tela, preto, (posicaoXPersona,posicaoYPersona), 40, 0 )
-        tela.blit( iron, (posicaoXPersona, posicaoYPersona) )
+        tela.blit(iron, (posicaoXPersona, posicaoYPersona) )
+        tela.blit(kiara, (300, 200))
+        tela.blit(helloKitty, (360, 235))
 
         # coloca o balao de soninho da kiara
-        balaoSonho(tela, "ZzZzZZ", preto, branco, (750, 500), sizeBalao)
+        balaoSonho(tela, "ZzZzZZ", preto, branco, (340, 220), sizeBalao)
         
         posicaoYfastOlivia = posicaoYfastOlivia + velocidadefastOlivia
-        if posicaoYfastOlivia > 600:
+        posicaoYoliviaDeRoupinha = posicaoYoliviaDeRoupinha + velocidadefastOlivia
+        
+        if posicaoYfastOlivia > 600 and posicaoYoliviaDeRoupinha > 600:
             posicaoYfastOlivia = -240
+            posicaoYoliviaDeRoupinha = -240
             pontos = pontos + 1
             velocidadefastOlivia = velocidadefastOlivia + 1
-            posicaoXfastOlivia = random.randint(0,800)
+            posicaoXfastOlivia = random.randint(10,750)      
+            posicaoXoliviaDeRoupinha = random.randint(10,750)      
             pygame.mixer.Sound.play(ataqueNormal)
             sizeBalao = 35 if sizeBalao == 20 else 20
             
             
-        tela.blit( fastOlivia, (posicaoXfastOlivia, posicaoYfastOlivia) )
+        tela.blit(fastOlivia, (posicaoXfastOlivia, posicaoYfastOlivia) )
+        tela.blit(oliviaDeRoupa, (posicaoXoliviaDeRoupinha, posicaoYoliviaDeRoupinha))
         
-        texto = fonte.render(nome+"- Pontos: "+str(pontos), True, branco)
+        texto = fonte.render(nome+" - Pontos: "+str(pontos), True, vermelho)
         tela.blit(texto, (10,10))
         
         pixelsPersonaX = list(range(posicaoXPersona, posicaoXPersona+larguraPersona))
         pixelsPersonaY = list(range(posicaoYPersona, posicaoYPersona+alturaPersona))
         pixelsfastOliviaX = list(range(posicaoXfastOlivia, posicaoXfastOlivia + larguafastOlivia))
         pixelsfastOliviaY = list(range(posicaoYfastOlivia, posicaoYfastOlivia + alturafastOlivia))
+        pixelsolivaDeRoupinhaX = list(range(posicaoXoliviaDeRoupinha, posicaoXoliviaDeRoupinha + larguraoliviaDeRoupinha))
+        pixelsolivaDeRoupinhaY = list(range(posicaoYoliviaDeRoupinha, posicaoYoliviaDeRoupinha + alturaoliviaDeRoupinha))
         
-        if  len( list( set(pixelsfastOliviaY).intersection(set(pixelsPersonaY))) ) > dificuldade:
-            if len( list( set(pixelsfastOliviaX).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
+        if  len( list( set(pixelsfastOliviaY).intersection(set(pixelsPersonaY))) or list( set(pixelsolivaDeRoupinhaY).intersection(set(pixelsPersonaY)))) > dificuldade:
+            if len( list( set(pixelsfastOliviaX).intersection(set(pixelsPersonaX)) ) or  list( set(pixelsolivaDeRoupinhaX).intersection(set(pixelsPersonaX)) ))  > dificuldade:
                 dead(nome, pontos)
         
         pygame.display.update()
@@ -125,7 +122,7 @@ def jogar(nome):
 
 def dead(nome, pontos):
     pygame.mixer.music.stop()
-    pygame.mixer.Sound.play(explosaoSound)
+    # pygame.mixer.Sound.play(explosaoSound)
     
     jogadas  = {}
     try:
@@ -153,7 +150,7 @@ def dead(nome, pontos):
                     jogar(nome)
         tela.fill(branco)
         tela.blit(fundoDead, (0,0))
-        buttonStart = pygame.draw.rect(tela, preto, (35,482,750,100),0)
+        buttonStart = pygame.draw.rect(tela, vermelho, (35,482,750,100),0)
         textoStart = fonteStart.render("RESTART", True, branco)
         tela.blit(textoStart, (400,482))
         textoEnter = fonte.render("Press enter to continue...", True, branco)
@@ -182,7 +179,7 @@ def ranking():
                     start()
 
         tela.fill(preto)
-        buttonStart = pygame.draw.rect(tela, preto, (35,482,750,100),0)
+        buttonStart = pygame.draw.rect(tela, vermelho, (35,482,750,100),0)
         textoStart = fonteStart.render("BACK TO START", True, branco)
         tela.blit(textoStart, (330,482))
         
@@ -218,8 +215,8 @@ def start():
 
         tela.fill(branco)
         tela.blit(fundoStart, (0,0))
-        buttonStart = pygame.draw.rect(tela, preto, (35,482,750,100),0)
-        buttonRanking = pygame.draw.rect(tela, preto, (35,50,200,50),0,30)
+        buttonStart = pygame.draw.rect(tela, vermelho, (35,482,750,100),0)
+        buttonRanking = pygame.draw.rect(tela, vermelho, (35,50,200,50),0,30)
         textoRanking = fonte.render("Ranking", True, branco)
         tela.blit(textoRanking, (90,50))
         textoStart = fonteStart.render("START", True, branco)
